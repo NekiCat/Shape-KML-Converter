@@ -21,10 +21,10 @@ namespace shp2kml.Shape
             PolylineZ = 13,
             PolygonZ = 15,
             MultiPointZ = 18,
-            PointM = 21,
-            PolylineM = 23,
-            PolygonM = 25,
-            MultiPointM = 28,
+            PointMeasured = 21,
+            PolylineMeasured = 23,
+            PolygonMeasured = 25,
+            MultiPointMeasured = 28,
             MultiPatch = 31
         }
 
@@ -53,6 +53,10 @@ namespace shp2kml.Shape
                 case ShapeType.NullShape: return new NullRecord();
                 case ShapeType.Point: return PointRecord.ReadFromStream(reader);
                 case ShapeType.MultiPoint: return MultiPointRecord.ReadFromStream(reader);
+                case ShapeType.Polygon: return PolygonRecord.ReadFromStream(reader);
+                case ShapeType.PointMeasured: return PointMRecord.ReadFromStream(reader);
+                case ShapeType.MultiPointMeasured: return MultiPointMRecord.ReadFromStream(reader);
+                case ShapeType.PolygonMeasured: return PolygonMRecord.ReadFromStream(reader);
                 default: throw new ArgumentException("Unsupported shape type");
             }
         }

@@ -45,11 +45,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Endianness.cs" />
+    <Compile Include="Shape\Bounds.cs" />
     <Compile Include="Shape\Point.cs" />
     <Compile Include="Shape\Records\MultiPointRecord.cs" />
-    <Compile Include="Shape\Records\NullShape.cs" />
-    <Compile Include="Shape\Records\PointShape.cs" />
-    <Compile Include="Shape\ShapeRecord.cs" />
+    <Compile Include="Shape\Records\NullRecord.cs" />
+    <Compile Include="Shape\Records\PointRecord.cs" />
+    <Compile Include="Shape\Records\PolygonRecord.cs" />
+    <Compile Include="Shape\Records\PolyLineRecord.cs" />
+    <Compile Include="Shape\IShapeRecord.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
