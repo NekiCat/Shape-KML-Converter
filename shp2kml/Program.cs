@@ -35,43 +35,9 @@ namespace shp2kml
                 output.Name = "test.kml";
                 output.Open = false;
 
-                foreach (var feature in data.Features)
-                {
-                    IPolygon polygon = null;
-                    if (feature.BasicGeometry is IPolygon)
-                    {
-                        polygon = (IPolygon)feature.BasicGeometry;
-                    }
-                    else if (feature.BasicGeometry is IMultiPolygon)
-                    {
-                        foreach (var mpoly in (feature.BasicGeometry as IMultiPolygon).Geometries)
-                        {
-                            var kpoly = (mpoly as IPolygon).ToPolygon();
-                            kpoly.Extrude = false;
-                            kpoly.Tessellate = false;
-
-                            var pfeat = new Placemark();
-                            pfeat.Name = "Multitest";
-                            pfeat.Geometry = kpoly;
-                            output.AddFeature(pfeat);
-                        }
-                        continue;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Unsupported geometry type");
-                        continue;
-                    }
-
-                    var kmlPolygon = polygon.ToPolygon();
-                    kmlPolygon.Extrude = true;
-                    kmlPolygon.Tessellate = true;
-
-                    var feat = new Placemark();
-                    feat.Name = "test";
-                    feat.Geometry = kmlPolygon;
-                    output.AddFeature(feat);
-                }
+                var filter = new NullFilter();
+                var list = filter.Filter(data.Features);
+                foreach (var feat in list) output.AddFeature(feat);
 
                 Kml root = new Kml();
                 root.Feature = output;

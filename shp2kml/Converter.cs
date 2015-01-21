@@ -96,5 +96,27 @@ namespace shp2kml
             }
             return new DotSpatial.Topology.Polygon(poly.OuterBoundary.LinearRing.ToLinearRing(), list.ToArray());
         }
+
+        public static SharpKml.Dom.MultipleGeometry ToMultiPolygon(this DotSpatial.Topology.IMultiPolygon poly)
+        {
+            var result = new SharpKml.Dom.MultipleGeometry();
+
+            foreach (var p in poly.Geometries)
+            {
+                result.AddGeometry((p as DotSpatial.Topology.IPolygon).ToPolygon());
+            }
+
+            return result;
+        }
+
+        public static DotSpatial.Topology.IMultiPolygon ToMultiPolygon(this SharpKml.Dom.MultipleGeometry poly)
+        {
+            var list = new List<DotSpatial.Topology.IPolygon>();
+            foreach (var p in poly.Geometry)
+            {
+                list.Add((p as SharpKml.Dom.Polygon).ToPolygon());
+            }
+            return new DotSpatial.Topology.MultiPolygon(list.ToArray());
+        }
     }
 }
