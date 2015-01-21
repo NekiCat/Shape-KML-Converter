@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommandLine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,12 +12,17 @@ namespace shp2kml
         /// <summary>
         /// Der Haupteinstiegspunkt für die Anwendung.
         /// </summary>
-        [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            var settings = new Settings();
+            if (CommandLine.Parser.Default.ParseArguments(args, settings))
+            {
+                Console.WriteLine("Working");
+            }
+
+#if DEBUG
+            Console.ReadKey(true);
+#endif
         }
     }
 }
