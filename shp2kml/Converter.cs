@@ -8,14 +8,30 @@ namespace shp2kml
 {
     public static class Converter
     {
+        #region Primitives
+
         public static SharpKml.Base.Vector ToVector(this DotSpatial.Topology.Vector vector)
         {
-            return new SharpKml.Base.Vector(vector.Y, vector.X, vector.Z);
+            if (Double.IsNaN(vector.Z))
+            {
+                return new SharpKml.Base.Vector(vector.Y, vector.X);
+            }
+            else
+            {
+                return new SharpKml.Base.Vector(vector.Y, vector.X, vector.Z);
+            }
         }
 
         public static SharpKml.Base.Vector ToVector(this DotSpatial.Topology.Coordinate coord)
         {
-            return new SharpKml.Base.Vector(coord.Y, coord.X, coord.Z);
+            if (Double.IsNaN(coord.Z))
+            {
+                return new SharpKml.Base.Vector(coord.Y, coord.X);
+            }
+            else
+            {
+                return new SharpKml.Base.Vector(coord.Y, coord.X, coord.Z);
+            }
         }
 
         public static DotSpatial.Topology.Vector ToVector(this SharpKml.Base.Vector vector)
@@ -26,7 +42,7 @@ namespace shp2kml
             }
             else
             {
-                return new DotSpatial.Topology.Vector(vector.Latitude, vector.Longitude, 0);
+                return new DotSpatial.Topology.Vector(vector.Latitude, vector.Longitude, Double.NaN);
             }
         }
 
@@ -34,12 +50,39 @@ namespace shp2kml
         {
             if (vector.Altitude.HasValue)
             {
-                return new DotSpatial.Topology.Coordinate(vector.Latitude, vector.Longitude);
+                return new DotSpatial.Topology.Coordinate(vector.Latitude, vector.Longitude, vector.Altitude.Value);
             }
             else
             {
-                return new DotSpatial.Topology.Coordinate(vector.Latitude, vector.Longitude, vector.Altitude.Value);
+                return new DotSpatial.Topology.Coordinate(vector.Latitude, vector.Longitude);
             }
+        }
+
+        #endregion
+
+        #region Geometry
+
+        public static SharpKml.Dom.Point ToPoint(this DotSpatial.Topology.IPoint point)
+        {
+            if (Double.IsNaN(point.Z))
+            {
+                return new SharpKml.Dom.Point()
+                {
+                    Coordinate = new SharpKml.Base.Vector(point.Y, point.X)
+                };
+            }
+            else
+            {
+                return new SharpKml.Dom.Point()
+                {
+                    Coordinate = new SharpKml.Base.Vector(point.Y, point.X, point.Z)
+                };
+            }
+        }
+
+        public static DotSpatial.Topology.IPoint ToPoint(this SharpKml.Dom.Point point)
+        {
+            return new DotSpatial.Topology.Point(point.Coordinate.ToCoord());
         }
 
         public static SharpKml.Dom.LinearRing ToLinearRing(this DotSpatial.Topology.ILinearRing ring)
@@ -117,6 +160,38 @@ namespace shp2kml
                 list.Add((p as SharpKml.Dom.Polygon).ToPolygon());
             }
             return new DotSpatial.Topology.MultiPolygon(list.ToArray());
+        }
+
+        #endregion
+
+        public static SharpKml.Dom.Feature ToFeature(this DotSpatial.Data.IFeature feature)
+        {
+            if (feature.BasicGeometry is DotSpatial.Topology.IPoint)
+            {
+                var point = (feature.BasicGeometry as DotSpatial.Topology.IPoint).ToPoint();
+                return new SharpKml.Dom.Placemark()
+                {
+                    Geometry = point
+                };
+            }
+            if (feature.BasicGeometry is DotSpatial.Topology.IPolygon)
+            {
+                var polygon = (feature.BasicGeometry as DotSpatial.Topology.IPolygon).ToPolygon();
+                return new SharpKml.Dom.Placemark()
+                {
+                    Geometry = polygon
+                };
+            }
+            if (feature.BasicGeometry is DotSpatial.Topology.IMultiPolygon)
+            {
+                var mpoly = (feature.BasicGeometry as DotSpatial.Topology.IMultiPolygon).ToMultiPolygon();
+                return new SharpKml.Dom.Placemark()
+                {
+                    Geometry = mpoly
+                };
+            }
+
+            throw new NotImplementedException();
         }
     }
 }

@@ -31,13 +31,28 @@ namespace shp2kml
 
                 data.Projection = KnownCoordinateSystems.Geographic.World.WGS1984;
 
+                var filterFile = FeatureSet.OpenFile(settings.FilterFile);
+                filterFile.Projection = KnownCoordinateSystems.Geographic.World.WGS1984;
+
                 var output = new Document();
                 output.Name = "test.kml";
                 output.Open = false;
 
                 var filter = new NullFilter();
-                var list = filter.Filter(data.Features);
-                foreach (var feat in list) output.AddFeature(feat);
+                //var filter = new IntersectsFilter();
+                foreach (var feature in filter.Filter(data.Features, filterFile.Features))
+                {
+                    var f = feature.ToFeature();
+                    f.AddStyle(new Style()
+                    {
+                        Polygon = new PolygonStyle()
+                        {
+                            ColorMode = ColorMode.Random,
+                            Outline = false
+                        }
+                    });
+                    output.AddFeature(f);
+                }
 
                 Kml root = new Kml();
                 root.Feature = output;

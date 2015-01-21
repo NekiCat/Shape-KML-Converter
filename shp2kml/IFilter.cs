@@ -8,6 +8,6 @@ namespace shp2kml
 {
     interface IFilter
     {
-        IEnumerable<SharpKml.Dom.Feature> Filter(IEnumerable<DotSpatial.Data.IFeature> input);
+        IEnumerable<DotSpatial.Data.IFeature> Filter(IEnumerable<DotSpatial.Data.IFeature> input, IEnumerable<DotSpatial.Data.IFeature> filter);
     }
 }
