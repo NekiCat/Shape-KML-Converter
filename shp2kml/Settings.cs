@@ -41,6 +41,7 @@ namespace shp2kml
             };
 
             help.AddPreOptionsLine("Usage: shp2kml --buildings buildings.shp --output buildings.kmz");
+            help.AddPreOptionsLine("Warning: It is assumed that the shape files are encoded in WGS 84.");
             help.AddOptions(this);
 
             return help;
