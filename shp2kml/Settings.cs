@@ -13,6 +13,9 @@ namespace shp2kml
         [Option('b', "buildings", Required = true, HelpText = "The shape file containing the 3D buildings.")]
         public string BuildingsFile { get; set; }
 
+        [Option('s', "buildingsSystem", HelpText = "The coordinate system of the shape file containing the 3D buildings.")]
+        public string BuildingsSystem { get; set; }
+
         [Option('o', "output", Required = true, HelpText = "The output kmz file (Will be overwritten if it exists).")]
         public string OutputFile { get; set; }
 

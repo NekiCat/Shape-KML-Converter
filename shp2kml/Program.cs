@@ -31,8 +31,14 @@ namespace shp2kml
 
                 data.Projection = KnownCoordinateSystems.Geographic.World.WGS1984;
 
-                var filterFile = FeatureSet.OpenFile(settings.FilterFile);
-                filterFile.Projection = KnownCoordinateSystems.Geographic.World.WGS1984;
+                if (settings.BuildingsSystem != null)
+                {
+                    ProjectionInfo pi = ProjectionInfo.FromEsriString(settings.BuildingsSystem);
+                    data.Reproject(pi);
+                }
+
+                //var filterFile = FeatureSet.OpenFile(settings.FilterFile);
+                //filterFile.Projection = KnownCoordinateSystems.Geographic.World.WGS1984;
 
                 var output = new Document();
                 output.Name = "test.kml";
@@ -40,7 +46,7 @@ namespace shp2kml
 
                 var filter = new NullFilter();
                 //var filter = new IntersectsFilter();
-                foreach (var feature in filter.Filter(data.Features, filterFile.Features))
+                foreach (var feature in filter.Filter(data.Features, null))
                 {
                     var f = feature.ToFeature();
                     f.AddStyle(new Style()
