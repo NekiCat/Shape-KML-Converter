@@ -1,21 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shp2kml", "shp2kml\shp2kml.csproj", "{9556598C-0368-441D-9EA1-4B318C734293}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestFiles", "TestFiles", "{5CF63AB2-5421-4C1A-AD73-D9A73D2287EA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InputShape", "InputShape", "{BFB2D6AB-DDF1-4A32-953E-388C2CA7CE94}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\..\..\AppData\Local\Temp\7zECB6E.tmp\LOD1WGS84.cpg = ..\..\..\..\AppData\Local\Temp\7zECB6E.tmp\LOD1WGS84.cpg
-		..\..\..\..\AppData\Local\Temp\7zECB6E.tmp\LOD1WGS84.dbf = ..\..\..\..\AppData\Local\Temp\7zECB6E.tmp\LOD1WGS84.dbf
-		..\..\..\..\AppData\Local\Temp\7zECB6E.tmp\LOD1WGS84.prj = ..\..\..\..\AppData\Local\Temp\7zECB6E.tmp\LOD1WGS84.prj
-		..\..\..\..\AppData\Local\Temp\7zECB6E.tmp\LOD1WGS84.qpj = ..\..\..\..\AppData\Local\Temp\7zECB6E.tmp\LOD1WGS84.qpj
-		..\..\..\..\AppData\Local\Temp\7zECB6E.tmp\LOD1WGS84.shp = ..\..\..\..\AppData\Local\Temp\7zECB6E.tmp\LOD1WGS84.shp
-		..\..\..\..\AppData\Local\Temp\7zECB6E.tmp\LOD1WGS84.shx = ..\..\..\..\AppData\Local\Temp\7zECB6E.tmp\LOD1WGS84.shx
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

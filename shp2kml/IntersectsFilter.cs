@@ -12,7 +12,7 @@ namespace shp2kml
     {
         public IEnumerable<DotSpatial.Data.IFeature> Filter(IEnumerable<DotSpatial.Data.IFeature> input, IEnumerable<DotSpatial.Data.IFeature> filter)
         {
-            yield return filter.First();
+            yield return filter.FirstOrDefault();
 
             foreach (var feature in input)
             {
@@ -27,7 +27,7 @@ namespace shp2kml
         {
             foreach (var f in filter)
             {
-                if (f.Intersects(item)) return true;
+                if (item.Intersects((IGeometry)f.BasicGeometry)) return true;
             }
             return false;
         }

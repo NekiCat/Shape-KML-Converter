@@ -13,14 +13,17 @@ namespace shp2kml
         [Option('b', "buildings", Required = true, HelpText = "The shape file containing the 3D buildings.")]
         public string BuildingsFile { get; set; }
 
-        [Option('s', "buildingsSystem", HelpText = "The coordinate system of the shape file containing the 3D buildings.")]
-        public string BuildingsSystem { get; set; }
+        [Option('s', "buildingsProjection", HelpText = "The projection of the shape file containing the 3D buildings. Not needed when .prj file is present. Else assumed to be WGS1984.")]
+        public string BuildingsProjection { get; set; }
 
         [Option('o', "output", Required = true, HelpText = "The output kmz file (Will be overwritten if it exists).")]
         public string OutputFile { get; set; }
 
         [Option('f', "filter", Required = false, HelpText = "The shape file containing the areas for filtering the buildings.")]
         public string FilterFile { get; set; }
+
+        [Option('y', "filterProjection", HelpText = "The projection of the shape file containing the filter. Not needed when .prj file is present. Else assumed to be WGS1984.")]
+        public string FilterProjection { get; set; }
 
         [Option('p', "proximity", Required = false, HelpText = "If filter contains a line, sets the proximity for buildings to be included.")]
         public int Proximity { get; set; }
